@@ -11,8 +11,10 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.13",
     "axios": "^1.6.5",
+    "cloudinary": "^1.41.3",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.0",
+    "multiparty": "^4.2.3",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",
