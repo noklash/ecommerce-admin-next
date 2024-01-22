@@ -22,47 +22,34 @@
 
 
 
-// import { v2 as cloudinary } from 'cloudinary';
+import {v2 as cloudinary} from 'cloudinary';
+import { NextResponse } from 'next/server';
+          
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_KEY, 
+  api_secret: process.env.CLOUDINARY_SECRET 
+});
 
-// cloudinary.config({ 
-//   cloud_name: process.env.CLOUD_NAME, 
-//   api_key: process.env.CLOUDINARY_KEY, 
-//   api_secret: process.env.CLOUDINARY_SECRET 
-// });
+export default async function POST(request){
+    const { path } = await request.body;
+    console.log(request.body)
 
-// const handler = async (req, res) => {
-//     // console.log(req.body);
-//   try {
-//     const { path } = await req.body
-//     // console.log(path);
-//     if (!path) {
-//       return res.status(400).json({ message: "Image path is required" });
-//     }
+    if (!path){
+        return NextResponse.json({ message: "Image path is required"}, {status: 400});
+    }
 
-//     const options = {
-//       use_filename: true,
-//       unique_filename: false,
-//       overwrite: true,
-//       transformation: [{ width: 1000, height: 752, crop: "scale" }],
-//     };
+    try {
+        const options = {
+            use_filename: true,
+            unique_filename: false,
+            overwrite: true,
+            transformation: [{ width: 1000, height: 752, crop: "scale"}],
+        };
 
-//     const result = await cloudinary.uploader.upload(path, options);
-
-//     return res.status(200).json(result);
-//   } catch (error) {
-//     console.error("Failed to upload image on Cloudinary:", error);
-//     return res.status(500).json({ message: "Failed to upload image on Cloudinary" });
-//   }
-// };
-
-// export default handler;
-
-// // Set runtime: "edge" in the configuration
-// export const config = {
-//   api: {
-//     bodyParser: {
-//       sizeLimit: '1mb',
-//     },
-//     runtime: 'edge', // Add this line to use the "edge" runtime
-//   },
-// };
+        const result = await cloudinary.uploader.upload(path, options);
+        return NextResponse.json(result, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: "Failed to upload image on cloudinary"}, { status: 500});
+    }
+}

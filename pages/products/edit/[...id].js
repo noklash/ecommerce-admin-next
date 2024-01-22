@@ -13,8 +13,8 @@ const EditProductPage = () => {
       if (!id){
         return;
       }
-      axios.get('/api/products?id='+id).then(response => {
-        setProductInfo(response.data);
+      axios.get(`https://rest-ecommerce-next.onrender.com/product/${id}`).then(response => {
+        setProductInfo(response.data.data);
       })
     }, [id])
 

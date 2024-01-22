@@ -11,8 +11,8 @@ const deleteProductPage = () => {
         if(!id){
             return;
         }
-        axios.get('/api/products?id='+id).then(response => {
-           setProductInfo(response.data);
+        axios.get(`https://rest-ecommerce-next.onrender.com/product/${id}`).then(response => {
+           setProductInfo(response.data.data);
         })
     }, [])
 
@@ -20,7 +20,7 @@ const deleteProductPage = () => {
         router.push('/products');
     }
     const deleteProduct = async () => {
-        await axios.delete('/api/products?id='+id);
+        await axios.delete(`https://rest-ecommerce-next.onrender.com/product/${id}`);
         goBack();
     }
 

@@ -6,11 +6,19 @@ import { useEffect, useState } from "react"
 const Product = () => {
   const [products, setProducts] = useState([]);
 
+
   useEffect(() => {
-    axios.get('/api/products').then(response => {
-     setProducts(response.data);
-    })
+    axios.get('https://rest-ecommerce-next.onrender.com/product')
+      .then(response => {
+        console.log(response.data.data); // Add this line to check the response data
+        setProducts(response.data.data);
+        // REFACTOR THE RESPONSE FROM BACKEND
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+      });
   }, []);
+  
 
   return (
     <Layout>
