@@ -63,10 +63,10 @@ const ProductsForm = ({
                 setImages((prevPics) => [...prevPics, newItem]);
               };
 
-            const removePic = (e) => {
-                e.preventDefault()
-                setImages(images.filter(images[i] !== i))
-            }
+            // const removePic = (e) => {
+            //     e.preventDefault()
+            //     setImages(images.filter(images[i] !== i))
+            // }
 
             const uploadImage = async (e) => {
                 const file = e.target.files[0];
