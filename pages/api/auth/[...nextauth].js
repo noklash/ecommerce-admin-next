@@ -1,3 +1,4 @@
+import { adapter } from '@/lib/adapter'
 import clientPromise from '@/lib/mongodb'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import NextAuth from 'next-auth'
@@ -13,5 +14,7 @@ export default NextAuth({
     })
 ], 
 adapter: MongoDBAdapter(clientPromise)
+
+// adapter: adapter
     
 })
