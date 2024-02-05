@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { uploadImage } from "@/lib/action";
-import Spinner from "./Spinner";
 
 
 const ProductsForm = ({
@@ -101,15 +100,16 @@ const ProductsForm = ({
                     Photos
                 </label>
 
-                <div className="flex gap-2 mb-2 flex-wrap">
+                {/* {images.length > 0 && ( */}
+                    <div className="flex gap-2 mb-2 flex-wrap">
                        
-                       {!!images?.length && images.map((pic, i) => (
-                        <div className=" h-24">
+                       {images.map((pic, i) => (
+                        <div className=" relative inline-block  w-24 h-24">
                                 <Image
                                     src={pic}
                                     width={75}
                                     height={35}
-                                    className='rounded-lg'
+                                    className='w-full h-full'
                                     alt='image'
                                 />
 
@@ -131,7 +131,10 @@ const ProductsForm = ({
                     ))}
 
                     </div>
-                
+                 {/* )}  */}
+                <div className="h-24">
+                    {loading && <Spinner/> }
+                </div>
 
                 <div className="mb-2 mt-2">
                     <label className=" cursor-pointer mb-2 w-24 h-24 border flex justify-center text-sm flex-col items-center text-gray-500 gap-1 rounded-lg bg-gray-200">
