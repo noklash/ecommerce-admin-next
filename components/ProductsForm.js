@@ -26,7 +26,7 @@ const ProductsForm = ({
     useEffect(() => {
         // This effect runs when the 'images' state is updated
         console.log('Updated images:', images);
-    }, [images]);
+    }, []);
 
     async function saveProduct(ev){
         ev.preventDefault()
@@ -64,10 +64,10 @@ const ProductsForm = ({
                 setImages((prevPics) => [...prevPics, newItem]);
               };
 
-            // const removePic = (e) => {
-            //     e.preventDefault()
-            //     setImages(images.filter(images[i] !== i))
-            // }
+            const removePic = (e) => {
+                e.preventDefault()
+                setImages(images.filter(images[i] !== i))
+            }
 
             const uploadImage = async (e) => {
                 const file = e.target.files[0];
@@ -79,7 +79,7 @@ const ProductsForm = ({
                         // setUrl(res.data);
                        addItemToPics(res.data)
                         
-                        alert('Image uploaded successfully');
+                        // alert('Image uploaded successfully');
                         console.log(images)
                         return images
                     })
@@ -101,8 +101,7 @@ const ProductsForm = ({
                     Photos
                 </label>
 
-                {/* {images.length > 0 && ( */}
-                    <div className="flex gap-2 mb-2 flex-wrap">
+                <div className="flex gap-2 mb-2 flex-wrap">
                        
                        {!!images?.length && images.map((pic, i) => (
                         <div className=" h-24">
@@ -132,10 +131,7 @@ const ProductsForm = ({
                     ))}
 
                     </div>
-                 {/* )}  */}
-                <div className="h-24">
-                    {loading && <Spinner/> }
-                </div>
+                
 
                 <div className="mb-2 mt-2">
                     <label className=" cursor-pointer mb-2 w-24 h-24 border flex justify-center text-sm flex-col items-center text-gray-500 gap-1 rounded-lg bg-gray-200">
