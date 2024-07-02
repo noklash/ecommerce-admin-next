@@ -6,12 +6,21 @@ const Login = () => {
 
     
 
-    const[userSession, setUserSession] = useState({})
+    // const[userSession, setUserSession] = useState({})
     const [username, setUsername] = useState('');
     
-    useEffect(() => {
-        console.log(userSession)
-    }, [userSession])
+    // useEffect(() => {
+    //     const data = { username, password}
+    //      axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
+    //         .then((res)=> {
+    //             console.log("login successful", res.data);
+    //             const token = res.data.token;
+    //             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+    //         })
+    //         .catch((error) => {
+    //             console.log("signin error", error)
+    //         })
+    // }, [])
 
     const [password, setPassword] = useState('');
     
@@ -22,10 +31,29 @@ const Login = () => {
         ev.preventDefault()
         const data = { username, password}
 
-        const session = await axios.post('https://rest-ecommerce-next.onrender.com/api/login', data);
-          setUserSession(session.data.data) 
-        //   console.log(userSession) 
-        // router.push('/register');
+        // // const session = 
+        // await axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
+        //     .then((res)=> {
+        //         console.log("login successful", res.data);
+        //         const token = res.data.token;
+        //         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+        //     })
+        //   setUserSession(session.data.data) 
+        //   console.log(userSession)
+        
+        await axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
+            .then((res)=> {
+                console.log("login successful", res.data);
+                const token = res.data.token;
+                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+                if(token){
+                    router.push('/first');
+                }
+            })
+            .catch((error) => {
+                console.log("signin error", error)
+            })
+        
         
     }
 
