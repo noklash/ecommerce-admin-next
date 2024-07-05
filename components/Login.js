@@ -1,26 +1,17 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useAuth } from './AuthProvider';
 
 const Login = () => {
+    const { setToken } = useAuth()
 
+    const [isLoading, setIsLoading] = useState(false)
     
-
-    // const[userSession, setUserSession] = useState({})
     const [username, setUsername] = useState('');
     
-    // useEffect(() => {
-    //     const data = { username, password}
-    //      axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
-    //         .then((res)=> {
-    //             console.log("login successful", res.data);
-    //             const token = res.data.token;
-    //             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-    //         })
-    //         .catch((error) => {
-    //             console.log("signin error", error)
-    //         })
-    // }, [])
+   
 
     const [password, setPassword] = useState('');
     
@@ -30,29 +21,25 @@ const Login = () => {
     const loginUser = async (ev) => {
         ev.preventDefault()
         const data = { username, password}
+        setIsLoading(!isLoading)
 
-        // // const session = 
-        // await axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
-        //     .then((res)=> {
-        //         console.log("login successful", res.data);
-        //         const token = res.data.token;
-        //         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-        //     })
-        //   setUserSession(session.data.data) 
-        //   console.log(userSession)
-        
         await axios.post('https://rest-ecommerce-next.onrender.com/api/login', data)
             .then((res)=> {
                 console.log("login successful", res.data);
-                const token = res.data.token;
+                const token = res.data.data.token;
+                localStorage.setItem("token", 'Bearer ' + token);
+                setToken(token)
+                console.log(token)
                 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-                if(token){
+                
+                if(res.status){
                     router.push('/first');
                 }
             })
             .catch((error) => {
                 console.log("signin error", error)
             })
+            
         
         
     }
@@ -77,7 +64,7 @@ const Login = () => {
                 onChange={ev => setPassword(ev.target.value)} 
             />
 
-        <button type="submit" className="btn-primary my-4">Login </button>
+        <button type="submit" className="btn-primary my-4">{isLoading ? "loading..." : "Login" }</button>
     </form>
   )
 }
